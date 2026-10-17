@@ -1,0 +1,119 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="The portfolio of MPSimon13, a developer exploring technology and the web.">
+  <title>MPSimon13 | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'portfolio/site.css' %}">
+  <script defer src="{% static 'portfolio/site.js' %}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="MPSimon13 home">MPSimon13</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme">
+        <span aria-hidden="true">☼</span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="intro-hero" id="home" aria-labelledby="hero-title">
+      <canvas class="particle-canvas" aria-hidden="true"></canvas>
+      <div class="intro-content">
+        <h1 id="hero-title">Hi <span class="wave" aria-hidden="true">👋</span>, I’m <span class="hero-name">MPSimon13</span></h1>
+        <div class="portrait-frame" role="img" aria-label="Portrait photo placeholder for MPSimon13">
+          <span class="portrait-initials" aria-hidden="true">MP</span>
+          <span class="portrait-note">PHOTO</span>
+        </div>
+        <p class="interest-line">I am into <span class="rotating-interest" aria-live="polite">Cloud Computing</span><span class="typing-caret" aria-hidden="true"></span></p>
+        <div class="social-links" aria-label="Social profiles">
+          <a class="social-link social-email" href="mailto:your.email@example.com" aria-label="Email MPSimon13" title="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7" /></svg>
+          </a>
+          <span class="social-link social-github" role="img" aria-label="GitHub profile link to be added" title="GitHub">GH</span>
+          <span class="social-link social-linkedin" role="img" aria-label="LinkedIn profile link to be added" title="LinkedIn">in</span>
+          <span class="social-link social-instagram" role="img" aria-label="Instagram profile link to be added" title="Instagram">◎</span>
+          <span class="social-link social-dribbble" role="img" aria-label="Dribbble profile link to be added" title="Dribbble">◉</span>
+        </div>
+      </div>
+      <a class="hero-scroll" href="#about" aria-label="Scroll to about section"><span></span></a>
+    </section>
+
+    <section class="about section-wrap" id="about" aria-labelledby="about-title">
+      <div class="section-index"><span>01</span><span>ABOUT</span></div>
+      <div class="about-content">
+        <h2 id="about-title">Thoughtful by nature.<br><span class="muted">Curious by default.</span></h2>
+        <div class="about-columns">
+          <p>I’m a developer who enjoys making the web feel a little more human. I care about the details people notice, and the ones they don’t: a clear flow, a quick page, a small interaction that feels just right.</p>
+          <p>This space is where I share what I’m learning and the projects I’m proud to put my name on. I’m always open to good conversations and interesting collaborations.</p>
+        </div>
+        <div class="discipline-list" aria-label="Areas of focus">
+          <span>FRONT-END</span><span>BACK-END</span><span>UI / UX</span><span>ALWAYS LEARNING</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="work section-wrap" id="work" aria-labelledby="work-title">
+      <div class="section-index"><span>02</span><span>SELECTED WORK</span></div>
+      <div class="work-content">
+        <div class="section-heading">
+          <h2 id="work-title">Made with<br><span class="muted">purpose.</span></h2>
+          <p>A few things I’ve been working on.<br>More experiments are always in progress.</p>
+        </div>
+        {% if projects %}
+          <div class="project-list">
+            {% for project in projects %}
+              <article class="project-item">
+                <a class="project-link" href="{{ project.project_url|default:'#contact' }}" {% if project.project_url %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                  <div class="project-art" {% if project.cover_image_url %}style="background-image: url('{{ project.cover_image_url }}')"{% endif %}>
+                    <span class="project-art-index">PROJECT / {{ forloop.counter|stringformat:'02d' }}</span>
+                    <span class="project-art-mark" aria-hidden="true">{{ forloop.counter|stringformat:'02d' }}</span>
+                    <span class="project-art-arrow" aria-hidden="true">↗</span>
+                  </div>
+                  <div class="project-info">
+                    <div><h3>{{ project.title }}</h3><p>{{ project.description }}</p></div>
+                    <div class="project-meta"><span>{{ project.technologies|default:'Digital experience' }}</span>{% if project.featured %}<span class="featured-label">FEATURED</span>{% endif %}</div>
+                  </div>
+                </a>
+              </article>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-work"><span class="empty-mark" aria-hidden="true">+</span><p>Good work takes shape one idea at a time.</p><span>NEW PROJECTS IN PROGRESS</span></div>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="contact section-wrap" id="contact" aria-labelledby="contact-title">
+      <div class="section-index"><span>03</span><span>CONTACT</span></div>
+      <div class="contact-content">
+        <p class="eyebrow">HAVE A GOOD ONE IN MIND?</p>
+        <h2 id="contact-title">Let’s make<br><span class="accent">it happen.</span></h2>
+        <a class="contact-link" href="mailto:your.email@example.com">your.email@example.com <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="contact-aside"><span>OPEN TO COLLABORATION</span><span>REMOTE / ANYWHERE</span></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="#home">MP<span>.</span></a>
+    <span>BUILT WITH CARE · 2026</span>
+    <a href="/admin/">ADMIN <span aria-hidden="true">↗</span></a>
+  </footer>
+</body>
+</html>
